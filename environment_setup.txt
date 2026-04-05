@@ -1,0 +1,52 @@
+step 1)
+# Install Unsloth from source
+!git clone https://github.com/billishyahao/unsloth.git && cd unsloth && git checkout billhe/rocm &&  pip install .
+!pip install unsloth_zoo==2025.3.17
+# Install ROCm Bitsandbytes from source 
+!git clone --recurse https://github.com/ROCm/bitsandbytes && cd bitsandbytes && git checkout rocm_enabled_multi_backend && pip install -r requirements-dev.txt && cmake -DCOMPUTE_BACKEND=hip -S . && make -j  && pip install .
+# This notebook is verified under unsloth==2025.3.19 unsloth_zoo==2025.3.17 bitsandbytes==0.43.3.dev0
+
+step 2) 
+# Verify the installation and version of the required libraries
+!pip list | grep unsloth
+Here is the expected output:
+
+unsloth                           2025.3.19
+unsloth_zoo                       2025.3.17
+
+step 3) Provide your Hugging Face token
+You'll require a Hugging Face API token to access Llama-3.1. Generate your token at Hugging Face Tokens and request access for Llama-3.1 8B. Tokens typically start with "hf_".
+
+Run the following interactive block in your Jupyter notebook to set up the token:
+
+Note: Uncheck the "Add token as Git credential" option.
+# run this below command in terminal:-
+from huggingface_hub import notebook_login, HfApi
+
+# Prompt the user to log in
+notebook_login()
+
+
+step 4) # Check your huggingface login:
+from huggingface_hub import HfApi
+
+try:
+    api = HfApi()
+    user_info = api.whoami()
+    print(f"Token validated successfully! Logged in as: {user_info['name']}")
+except Exception as e:
+    print(f"Token validation failed. Error: {e}")
+
+
+step 5) congratulation now you can follow the model.py
+
+
+
+
+
+
+User: Anoop Singh (21, CS Student @ Vikrant University)
+
+Project: NextMatrix GRPO Reasoning Ecosystem
+
+Status: Environment verified on AMD Cloud.
